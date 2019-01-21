@@ -8,6 +8,7 @@
       >
         <div class="mui-scroll">
           <a
+            @click="getPhotoListByCateId(item.id)"
             :class="['mui-control-item', item.id == 0 ? 'mui-active' : '']"
             v-for="item in cates"
             :key="item.id"
@@ -20,7 +21,7 @@
     <!-- 图片列表区域 -->
     <ul class="photo-list">
       <router-link v-for="item in list" :key="item.id" :to="'/home/photoinfo/' + item.id" tag="li">
-        <img v-lazy="item.img_url">
+        <img src="https://konachan.net/data/preview/d0/99/d099f5f90fa05ca8b484734ece26cd97.jpg">
         <div class="info">
           <h1 class="info-title">{{ item.title }}</h1>
           <div class="info-body">{{ item.zhaiyao }}</div>
@@ -43,6 +44,7 @@ export default {
   },
   created() {
     this.getAllCategory();
+    this.getPhotoListByCateId(0)
   },
   mounted() {
     // 当 组件中的DOM结构被渲染好并放到页面中后，会执行这个 钩子函数
@@ -59,6 +61,13 @@ export default {
         //手动添加一个全部的选项
         res.message.unshift({ title: "全部", id: 0 });
         this.cates = res.message;
+      }
+    },
+    async getPhotoListByCateId(cateId){
+      //获取图片列表
+      const {data:res} =await this.$http.get('/api/getimages/'+cateId)
+      if(res.status ===0) {
+        this.list = res.message
       }
     }
   }

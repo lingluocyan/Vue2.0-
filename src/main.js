@@ -17,16 +17,21 @@ Vue.prototype.$http = axios;
 axios.defaults.baseURL = "http://127.0.0.1:3006/";
 import app from './App.vue'
 //导入Mint-ui组件
-import {Header,Swipe,SwipeItem,Button} from 'mint-ui'
+// import {Header,Swipe,SwipeItem,Button} from 'mint-ui'
+import MintUI from 'mint-ui'
+Vue.use(MintUI)
 //导入mui的样式
 import './lib/mui/css/mui.min.css'
 import './lib/mui/css/icons-extra.css'
+//导入图片预览插件
+import VuePreview from 'vue-preview'
+Vue.use(VuePreview)
 //导入router.js模块
 import router from './router'
-Vue.component(Header.name,Header)
-Vue.component(Swipe.name,Swipe)
-Vue.component(SwipeItem.name,SwipeItem)
-Vue.component(Button.name,Button)
+// Vue.component(Header.name,Header)
+// Vue.component(Swipe.name,Swipe)
+// Vue.component(SwipeItem.name,SwipeItem)
+// Vue.component(Button.name,Button)
 const vm = new Vue({
     el:"#app",
     render:c=>c(app),

@@ -137,6 +137,13 @@ mui('.mui-scroll-weapper').scroll({
 + 解决方法:组件下方style里加上 *{touch-action: pan-y}
 然后发现tabbar有不好使了,这时候把App.vue中的mui-tab-item类修改下名字比如mui-tab-item-llb然后把之前的样式重新给这个新类,问题的原因是这个类名有冲突
 ### 制作图片列表区域
-1.图片列表使用了懒加载技术,可以使用Mint-ui提供的lazy-load
+1.图片列表使用了懒加载技术,可以使用Mint-ui提供的lazy-load,但是由于不明bug导入lazy-load后程序崩溃无法解决加上接口的图片失效因此弃用lazy-load
 2.根据其使用文档使用
 3.渲染图片列表数据
+### 制作点击图片跳转到图片详情页面
+1.把Li改造为router-link并用tag标签改为li
+2.制作详情页面，获取数据渲染页面
+### 实现缩略图功能
+1.使用 vue-preview 缩略图插件
+2.获取图片列表渲染页面
+3.图片数据对象中,必须有w 和 h
