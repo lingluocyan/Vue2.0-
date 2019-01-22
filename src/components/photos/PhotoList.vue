@@ -7,8 +7,8 @@
         class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted"
       >
         <div class="mui-scroll">
+            <!-- @click="getPhotoListByCateId(item.id)" -->
           <a
-            @click="getPhotoListByCateId(item.id)"
             :class="['mui-control-item', item.id == 0 ? 'mui-active' : '']"
             v-for="item in cates"
             :key="item.id"
@@ -94,11 +94,16 @@ export default {
       width: 100%;
       vertical-align: middle;
     }
-    img[lazy="loading"] {
-      width: 40px;
+    img {
+      width: 100%;
       height: 300px;
       margin: auto;
     }
+    // img[lazy="loading"] {
+    //   width: 40px;
+    //   height: 300px;
+    //   margin: auto;
+    // }
 
     .info {
       color: white;

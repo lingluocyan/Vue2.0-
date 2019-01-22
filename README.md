@@ -147,3 +147,11 @@ mui('.mui-scroll-weapper').scroll({
 1.使用 vue-preview 缩略图插件
 2.获取图片列表渲染页面
 3.图片数据对象中,必须有w 和 h
+### 商品列表基本机构两列布局
+使用flex实现两列布局,使用justify-content: space-between;实现两边对齐,然后用padding留出边框
+图片区域和详情区域处于上下两个盒子，可以使用flex改变主轴方向,然后justify-content: space-between;相当于绝对定位一上一下，之后给图片所在大盒子一个高，在图片失效或加载慢的时候也可以有个样式框，图片本身套个带高度的盒子规范图片样式
+### 制作商品详情页面
+1.封装调用轮播图组件和数字框+-组件
+2.设置点击添加购物车小球动画，使用DOM API 的getBoundingClientRect方法获得指定DOM元素的top left right bottom计算动态得出购物车右上角小球和数字框小球的距离,使用钩子函数beforeEnter enter afterEnter实现半程动画
+3.通过父传子goodsinfo=>goodsinfo_number通过绑定@getCount="getSelectedCount"到父元素中的子组件上，然后子组件也定义一个方法,由于是输入框可以定义@change="countchanged"事件,也就是输入框改变事件,这个方法通过This.refs获取指定输入框中的数字通过在countchanged事件中 this.$emit(getCount,parseInt(this.$refs.numbox.value))父组件的事件 传输给父元素值,第二个参数代表传入的实参，由此获得了子组件输入框的值
+4.通过子传父:max="goodsinfo.stock_quantity"把库存值传给子组件以设置最大值,子组件通过props:['max']接受,但是由于获取库存的方法是异步的,有可能传不过去值，因此子组件设置watch属性监听，以JS方式动态设置最大值mui(".mui-numbox").numbox().setOption('max',newVal)
