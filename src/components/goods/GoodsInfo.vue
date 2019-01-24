@@ -54,8 +54,8 @@
   </div>
 </template>
 <script>
-import swiper from "../subcomponents/swiper.vue";
-import numbox from "../subcomponents/goodsinfo_numbox.vue";
+import swiper from '../subcomponents/swiper.vue'
+import numbox from '../subcomponents/goodsinfo_numbox.vue'
 export default {
   data() {
     return {
@@ -64,31 +64,31 @@ export default {
       lunbotu: [
         {
           img:
-            "https://i0.hdslb.com/bfs/archive/ad2934d947ebe810d05971826dafa6d13e5b7835.jpg@80w_50h.webp"
+            'https://m.360buyimg.com/babel/jfs/t1/4528/10/3590/153299/5b997bf5E4a513949/45ab3dd6c35d981b.jpg!q70.jpg'
         },
         {
           img:
-            "https://i1.hdslb.com/bfs/archive/25b01cb6c91fe4f4b841fbd8732f85e5dfe10c32.jpg@80w_50h.webp"
+            'https://m.360buyimg.com/babel/jfs/t1/763/23/3810/69901/5b997c0bE935c19c5/ce91ae1a89c113c7.jpg!q70.jpg'
         },
         {
           img:
-            "https://i1.hdslb.com/bfs/archive/f4fd355273d18c39aaf0f92d9a462a4c2a21b431.jpg@80w_50h.webp"
+            'https://m.360buyimg.com/babel/jfs/t1/28689/24/1135/249196/5c0fa5e9Eea3bce60/d63a58606745e7c2.jpg!q70.jpg'
         }
       ],
       goodsinfo: {}, //商品信息
       ballFlag: false, //控制小球的隐藏和显示
       selectedCount: 1 //最少为1个
-    };
+    }
   },
   created() {
-    this.getLunbotu();
-    this.getGoodsInfo();
+    this.getLunbotu()
+    this.getGoodsInfo()
   },
   methods: {
     async getLunbotu() {
       const { data: res } = await this.$http.get(
-        "/api/getthumimages/" + this.id
-      );
+        '/api/getthumimages/' + this.id
+      )
       if (res.status === 0) {
         //改造数据以便轮播图使用,添加img属性
         // res.message.forEach(item=>{
@@ -99,59 +99,67 @@ export default {
     },
     async getGoodsInfo() {
       const { data: res } = await this.$http.get(
-        "/api/goods/getinfo/" + this.id
-      );
+        '/api/goods/getinfo/' + this.id
+      )
       if (res.status === 0) {
-        this.goodsinfo = res.message[0];
+        this.goodsinfo = res.message[0]
       }
     },
     goDesc(id) {
       //编程式导航跳转,到图文列表页面
-      this.$router.push({ name: "goodsdesc", params: { id } });
+      this.$router.push({ name: 'goodsdesc', params: { id } })
     },
     goComment(id) {
       //编程式导航跳转到评论页面
-      this.$router.push({ name: "goodscomment", params: { id } });
+      this.$router.push({ name: 'goodscomment', params: { id } })
     },
     addToShopCar() {
       //添加到购物车
-      this.ballFlag = !this.ballFlag;
+      this.ballFlag = !this.ballFlag
+      const goodsinfo = {
+        id: this.id,
+        count: this.selectedCount,
+        price: this.goodsinfo.sell_price,
+        selected: true //加入到购物车了默认为true
+      }
+      //调用store中的mutations把商品加入购物车
+      this.$store.commit('addToCar', goodsinfo)
     },
     beforeEnter(el) {
-      el.style.transform = "translate(0, 0)";
+      el.style.transform = 'translate(0, 0)'
     },
     enter(el, done) {
       // el.style.transform = "translate(93px,240px)";
       // el.style.transition = "all 1s ease"
       //   获取小球的 在页面中的位置
-      el.offsetWidth;
-      const ballPosition = this.$refs.ball.getBoundingClientRect();
+      el.offsetWidth
+      const ballPosition = this.$refs.ball.getBoundingClientRect()
       // 获取 徽标(购物车右上角小图标) 在页面中的位置
       const badgePosition = document
-        .getElementById("badge")
-        .getBoundingClientRect();
+        .getElementById('badge')
+        .getBoundingClientRect()
       // 横向移动
-      const xDist = badgePosition.left - ballPosition.left;
+      const xDist = badgePosition.left - ballPosition.left
       //纵向移动
-      const yDist = badgePosition.top - ballPosition.top;
+      const yDist = badgePosition.top - ballPosition.top
       //es6模板语法
-      el.style.transform = `translate(${xDist}px, ${yDist}px)`;
-      el.style.transition = "all 0.6s cubic-bezier(.4,-0.3,1,.68)";
-      done(); //代表执行下一个方法
+      el.style.transform = `translate(${xDist}px, ${yDist}px)`
+      el.style.transition = 'all 0.6s cubic-bezier(.4,-0.3,1,.68)'
+      done() //代表执行下一个方法
     },
     afterEnter(el) {
-      this.ballFlag = !this.ballFlag;
+      this.ballFlag = !this.ballFlag
     },
     getSelectedCount(count) {
-      this.selectedCount = count;
-      console.log(count);
+      this.selectedCount = count
+      console.log(count)
     }
   },
   components: {
     swiper,
     numbox
   }
-};
+}
 </script>
 <style lang="scss" scoped>
 .goodsinfo-container {
